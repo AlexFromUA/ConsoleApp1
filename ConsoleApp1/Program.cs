@@ -22,8 +22,9 @@
         
         int MaxSpeed = 10;
         bool IsDead = false;
-        List<Points> points = new List<Points>() { new Points(5, 2, 1), new Points(5, 3, 1) };
+        List<Points> points = new List<Points>() { new Points(5, 10, 1), new Points(5, 3, 1) };
         int length = 2;
+        double distanceFromCenter;
 
         public void Move(char Direction, int speed)
         {
@@ -75,6 +76,21 @@
             str2 += str;
             return (str2);
         }
+
+        public void CalculateDistanceFromCenter()
+        {
+            distanceFromCenter = Math.Sqrt(Math.Pow(points[0].X, 2) + Math.Pow(points[0].Y, 2));
+            Console.WriteLine(distanceFromCenter);
+            foreach (Points p in points)
+            {
+                double dist = Math.Sqrt(Math.Pow(p.X, 2) + Math.Pow(p.Y, 2));
+                if (dist < distanceFromCenter)
+                {
+                    distanceFromCenter = dist;
+                }
+            }
+            Console.WriteLine(distanceFromCenter);
+        }
     }
     
     public class Program
@@ -82,9 +98,7 @@
         public static void Main(string[] args)
         {
             Ship ship = new Ship(); 
-            Console.WriteLine(ship.ToString());
-            ship.Move('L');
-            Console.WriteLine(ship.ToString());
+            ship.CalculateDistanceFromCenter();
 
         }
     }

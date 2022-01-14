@@ -17,39 +17,6 @@ namespace ConsoleApp1
             Speed = speed; Length = length;
         }
 
-        /*public static void Move(Field f, int index, char Direction)
-        {
-            var ship = f.Ships[index];
-            switch (Direction)
-            {
-                case 'U': 
-                    foreach (Points p in ship.points)
-                    {
-                        p.Y += ship.Speed;
-                    }
-                    break;
-                case 'D':
-                    foreach (Points p in points)
-                    {
-                        p.Y -= Speed;
-                    }
-                    break;
-
-                case 'R':
-                    foreach (Points p in points)
-                    {
-                        p.X += Speed;
-                    }
-                    break;
-                case 'L':
-                    foreach (Points p in points)
-                    {
-                        p.X -= Speed;
-                    }
-                    break;
-
-            }
-        }*/
 
         public override string ToString()
         {

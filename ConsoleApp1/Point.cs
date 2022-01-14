@@ -4,7 +4,7 @@
     {
         public int X { get; set; }
         public int Y { get; set; }
-        Quadrant q;
+        public Quadrant quadrant;
         public bool IsAvailabel { get; set; } = true;
         public Ship ship;
         public double DistFromCenter { get { return (Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2))); } }
@@ -13,12 +13,12 @@
 
         public Point(int x, int y, int q)
         {
-            X = x; Y = y; this.q = (Quadrant)q;
+            X = x; Y = y; this.quadrant = (Quadrant)q;
         }
 
         public override string ToString()
         {
-            return ($"Coordinates of the point are ({X}; {Y} {q};)");
+            return ($"Coordinates of the point are ({X}; {Y} {quadrant};)");
         }
 
     }

@@ -63,18 +63,12 @@
                         if (!this[x, y + ship.Length, q].IsAvailabel) { throw new Exception("The point isn't available"); } 
 
                         this[x, y + ship.Length, q].ship = ship;
-                        this[x, y + ship.Length, q].IsAvailabel = false;
-
-                        // Set the the minimum distance from ship to the center
-                        if (this[x , y + ship.Length, q].DistFromCenter < ship.MinDist)
-                        {
-
-                            ship.MinDist = this[x, y + ship.Length, q].DistFromCenter;
-                        }
+                        this[x, y + ship.Length, q].IsAvailabel = false;                       
 
                         PointsOfShip.Add(this[x, y + ship.Length, q], ship);
                         y++;
                     }
+                    SelectTheMinDist(ship);
                     break;
                 
 
@@ -101,18 +95,13 @@
                         if (!this[x + ship.Length, y, q].IsAvailabel) { throw new Exception("The point isn't available"); }
 
                         this[x + ship.Length, y, q].ship = ship;
-                        this[x + ship.Length, y, q].IsAvailabel = false;
-
-                        // Set the the minimum distance from ship to the center
-                        if (this[x + ship.Length, y, q].DistFromCenter < ship.MinDist)
-                        {
-
-                            ship.MinDist = this[x + ship.Length, y, q].DistFromCenter;
-                        }
+                        this[x + ship.Length, y, q].IsAvailabel = false;                     
 
                         PointsOfShip.Add(this[x + ship.Length, y, q], ship);
                         x++;
                     }
+                    SelectTheMinDist(ship);
+
                     break;
                
             }
@@ -120,7 +109,7 @@
 
         public void AddShip(int X, int Y, int Q, Ship ship, char direct)
         {
-            ship.MinDist = Size;
+            
 
             if (listOfShips.Contains(ship))
             {
@@ -135,32 +124,8 @@
                 case 'U':
                     for (int i = 0; i < ship.Length; i++)
                     {
-                        // It is possible that one of the points will be not available 
-                        // So the actual length will not be equal to length in ship.length 
+                        AddNewPointToShip(X, Y, Q, ship);
                         
-                        string str = ($"{X}{Y}{Q}");
-                        int index = Convert.ToInt32(str);
-
-                        // Check the existing of the Point
-                        if (!PointsOfField.ContainsKey(index))
-                        {
-                            this[X, Y, Q] = new Point(X, Y, Q);
-                        }
-
-                        // Check the availbility of the Point
-                        if (!this[X, Y, Q].IsAvailabel) { throw new Exception("The point isn't available"); }
-
-                        this[X, Y, Q].ship = ship;
-                        this[X, Y, Q].IsAvailabel = false;
-
-                        // Set the the minimum distance from ship to the center
-                        if (this[X, Y, Q].DistFromCenter < ship.MinDist)
-                        {
-
-                            ship.MinDist = this[X, Y, Q].DistFromCenter;
-                        }
-
-                        PointsOfShip.Add(this[X, Y, Q], ship);
                         Y++;
                     }
                     break;
@@ -168,27 +133,14 @@
                 case 'R':
                     for (int i = 0; i < ship.Length; i++)
                     {
-                        
-                        string str = ($"{X}{Y}{Q}");
-                        int index = Convert.ToInt32(str);
-                        if (!PointsOfField.ContainsKey(index))
-                        {
-                            this[X, Y, Q] = new Point(X, Y, Q);
-                        }
-                        if (this[X, Y, Q].IsAvailabel != true) { throw new Exception("The point isn't available"); }
-                        this[X, Y, Q].ship = ship;
-                        this[X, Y, Q].IsAvailabel = false;
-                        if (this[X, Y, Q].DistFromCenter < ship.MinDist)
-                        {
+                        AddNewPointToShip(X, Y, Q, ship);
 
-                            ship.MinDist = this[X, Y, Q].DistFromCenter;
-                        }
-
-                        PointsOfShip.Add(this[X, Y, Q], ship);
                         X++;
                     }
                     break;
             }
+
+            SelectTheMinDist(ship);
             listOfShips.Add(ship);
         }
         public override string ToString()
@@ -220,6 +172,45 @@
                 }
             }
             return str;
+        }
+
+        public void SelectTheMinDist(Ship ship)
+        {
+            ship.MinDist = Size;
+            foreach (var ps in PointsOfShip)
+            {
+                if (ps.Value == ship)
+                {
+                    if (ps.Key.DistFromCenter < ship.MinDist)
+                    {
+
+                        ship.MinDist = ps.Key.DistFromCenter;
+                    }
+                }
+            }
+        }
+
+        public void AddNewPointToShip(int X, int Y, int Q, Ship ship)
+        {
+            string str = ($"{X}{Y}{Q}");
+            int index = Convert.ToInt32(str);
+
+            // Check the existing of the Point
+            if (!PointsOfField.ContainsKey(index))
+            {
+                this[X, Y, Q] = new Point(X, Y, Q);
+            }
+
+            // Check the availbility of the Point
+            if (!this[X, Y, Q].IsAvailabel) { throw new Exception("The point isn't available"); }
+
+            this[X, Y, Q].ship = ship;
+            this[X, Y, Q].IsAvailabel = false;
+
+            // Set the the minimum distance from ship to the center
+
+
+            PointsOfShip.Add(this[X, Y, Q], ship);
         }
     }
 }

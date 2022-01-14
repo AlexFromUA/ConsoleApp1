@@ -41,7 +41,7 @@
 
             switch (direct)
             {
-                case 'U':
+                case 'U' or 'D':
 
                     for (int i = 0; i < ship.Speed; i++)
                     {
@@ -66,7 +66,7 @@
                         this[x, y + ship.Length, q].IsAvailabel = false;
 
                         // Set the the minimum distance from ship to the center
-                        if (this[x, y + ship.Length, q].DistFromCenter < ship.MinDist)
+                        if (this[x , y + ship.Length, q].DistFromCenter < ship.MinDist)
                         {
 
                             ship.MinDist = this[x, y + ship.Length, q].DistFromCenter;
@@ -76,16 +76,45 @@
                         y++;
                     }
                     break;
-                case 'D':
+                
 
+
+                case 'R' or 'L':
+
+                    for (int i = 0; i < ship.Speed; i++)
+                    {
+
+                        // delete ship info from old point
+                        this[x, y, q].ship = null;
+                        this[x, y, q].IsAvailabel = true;
+                        PointsOfShip.Remove(this[x, y, q]);
+
+                        //add new point
+                        string str = ($"{x + ship.Length}{y }{q}");
+                        int index = Convert.ToInt32(str);
+                        if (!PointsOfField.ContainsKey(index))
+                        {
+                            this[x + ship.Length, y, q] = new Point(x + ship.Length,y, q);
+                        }
+
+                        // Check the availbility of the Point
+                        if (!this[x + ship.Length, y, q].IsAvailabel) { throw new Exception("The point isn't available"); }
+
+                        this[x + ship.Length, y, q].ship = ship;
+                        this[x + ship.Length, y, q].IsAvailabel = false;
+
+                        // Set the the minimum distance from ship to the center
+                        if (this[x + ship.Length, y, q].DistFromCenter < ship.MinDist)
+                        {
+
+                            ship.MinDist = this[x + ship.Length, y, q].DistFromCenter;
+                        }
+
+                        PointsOfShip.Add(this[x + ship.Length, y, q], ship);
+                        x++;
+                    }
                     break;
-
-                case 'R':
-
-                    break;
-                case 'L':
-
-                    break;
+               
             }
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class Ship
+    public abstract class Ship
     {
         public int Speed { get; set; }
         public int Length { get; set; }

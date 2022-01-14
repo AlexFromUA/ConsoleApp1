@@ -5,7 +5,7 @@
         public static void Main(string[] args)
         {
             Field field = new Field(20);
-            Ship ship = new Ship(5, 5);
+            Ship ship = new Battleship(2, 5);
             /*Ship ship2 = new Ship(5, 6);
             Ship ship3 = new Ship(12, 8);
             Ship ship4 = new Ship(15, 2);*/

@@ -7,7 +7,7 @@
         public Quadrant quadrant;
         public bool IsAvailabel { get; set; } = true;
         public Ship ship;
-        public double DistFromCenter { get { return (Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2))); } }
+        public double DistFromCenter { get { return (Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2))); } } 
 
 
 
@@ -18,7 +18,7 @@
 
         public override string ToString()
         {
-            return ($"Coordinates of the point are ({X}; {Y} {quadrant};)");
+            return ($"Coordinates of the point are ({X}; {Y}; {quadrant})");
         }
 
     }

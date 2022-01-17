@@ -14,9 +14,19 @@ namespace ConsoleApp1
 
         public Ship(int speed, int length) 
         { 
-            Speed = speed; Length = length;
+            Speed = speed; 
+            Length = length;
         }
 
+        public static bool operator ==(Ship ship1, Ship ship2) 
+        {
+            return ship1.GetType() == ship2.GetType() && ship1.Speed == ship2.Speed && ship1.Length == ship2.Length;
+        }
+        public static bool operator !=(Ship ship1, Ship ship2) 
+        {
+            
+            return !(ship1.GetType() == ship2.GetType() && ship1.Length == ship2.Length && ship1.Speed == ship2.Speed);
+        }
 
         public override string ToString()
         {

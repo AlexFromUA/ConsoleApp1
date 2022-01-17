@@ -50,22 +50,12 @@
                         this[x, y, q].ship = null;
                         this[x, y, q].IsAvailabel = true;
                         PointsOfShip.Remove(this[x, y, q]);
-                        
+
+                        int newY = y + ship.Length;
+
                         //add new point
-                        string str = ($"{x}{y + ship.Length}{q}");
-                        int index = Convert.ToInt32(str);
-                        if (!PointsOfField.ContainsKey(index))
-                        {
-                            this[x, y + ship.Length, q] = new Point(x, y + ship.Length, q);
-                        }
+                        AddNewPointToShip(x, newY, q, ship);
 
-                        // Check the availbility of the Point
-                        if (!this[x, y + ship.Length, q].IsAvailabel) { throw new Exception("The point isn't available"); } 
-
-                        this[x, y + ship.Length, q].ship = ship;
-                        this[x, y + ship.Length, q].IsAvailabel = false;                       
-
-                        PointsOfShip.Add(this[x, y + ship.Length, q], ship);
                         y++;
                     }
                     SelectTheMinDist(ship);
@@ -83,21 +73,12 @@
                         this[x, y, q].IsAvailabel = true;
                         PointsOfShip.Remove(this[x, y, q]);
 
+                        int newX = x + ship.Length;
+
                         //add new point
-                        string str = ($"{x + ship.Length}{y }{q}");
-                        int index = Convert.ToInt32(str);
-                        if (!PointsOfField.ContainsKey(index))
-                        {
-                            this[x + ship.Length, y, q] = new Point(x + ship.Length,y, q);
-                        }
 
-                        // Check the availbility of the Point
-                        if (!this[x + ship.Length, y, q].IsAvailabel) { throw new Exception("The point isn't available"); }
-
-                        this[x + ship.Length, y, q].ship = ship;
-                        this[x + ship.Length, y, q].IsAvailabel = false;                     
-
-                        PointsOfShip.Add(this[x + ship.Length, y, q], ship);
+                        AddNewPointToShip(newX, y, q, ship);
+                        
                         x++;
                     }
                     SelectTheMinDist(ship);
@@ -206,9 +187,6 @@
 
             this[X, Y, Q].ship = ship;
             this[X, Y, Q].IsAvailabel = false;
-
-            // Set the the minimum distance from ship to the center
-
 
             PointsOfShip.Add(this[X, Y, Q], ship);
         }

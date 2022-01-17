@@ -2,12 +2,13 @@
 {
     public class Field
     {
-        int Size { get; set; }
-        public Dictionary<int, Point> PointsOfField = new Dictionary<int, Point>();
+        int Size { get; set; } // size of the field
 
-        public Dictionary<Point, Ship> PointsOfShip = new Dictionary<Point, Ship>();
+        public Dictionary<int, Point> PointsOfField = new Dictionary<int, Point>(); // Contains the points that are belong to the field. Key is index with foemat (XYQ)
 
-        List<Ship> listOfShips = new List<Ship>();
+        public Dictionary<Point, Ship> PointsOfShip = new Dictionary<Point, Ship>(); // Contains the points (key) and the ships (value) on them
+
+        List<Ship> listOfShips = new List<Ship>(); // Contains the list of ships, that are already on the field
 
 
         public Field(int s)
@@ -33,8 +34,8 @@
 
         public void MoveShip(int X, int Y, int Q, char direct)
         {
-            Ship ship = PointsOfShip[this[X, Y, Q]];
-            Point point = PointsOfShip.Where(x => x.Value == ship).FirstOrDefault().Key;
+            Ship ship = PointsOfShip[this[X, Y, Q]]; // select the ship which located on this point
+            Point point = PointsOfShip.Where(x => x.Value == ship).FirstOrDefault().Key; // Select the first Point from dictionary PointsOfShip where value is the ship
             int x = point.X;
             int y = point.Y;
             int q = Convert.ToInt32(point.quadrant);
@@ -75,8 +76,7 @@
 
                         int newX = x + ship.Length;
 
-                        //add new point
-
+                        // add new point
                         AddNewPointToShip(newX, y, q, ship);
                         
                         x++;
@@ -127,6 +127,7 @@
         public override string ToString()
         {
 
+            // Bubble sort by minimal distance from center
             for (int i = 0; i < listOfShips.Count(); i++)
             {
                 for (int j = i + 1; j < listOfShips.Count(); j++)
@@ -140,6 +141,8 @@
                 }
             }
 
+
+            // Adding to ship.ToString() the info about ship's points (point.ToString())
             string str = "";
             foreach (var ship in listOfShips)
             {
@@ -157,7 +160,7 @@
 
         public void SelectTheMinDist(Ship ship)
         {
-            ship.MinDist = Size;
+            ship.MinDist = Size; // set the size of the field as the minimal distance
             foreach (var ps in PointsOfShip)
             {
                 if (ps.Value == ship)
